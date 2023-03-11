@@ -1,0 +1,11 @@
+## Gateway API CRDs v0.5.1:
+# GatewayClass
+# Gateway
+# HTTPRoute
+# ReferenceGrant
+
+resources:
+- gateway.networking.k8s.io_gatewayclasses.yaml
+- gateway.networking.k8s.io_gateways.yaml
+- gateway.networking.k8s.io_httproutes.yaml
+- gateway.networking.k8s.io_referencegrants.yaml

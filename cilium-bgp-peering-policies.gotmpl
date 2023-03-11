@@ -1,0 +1,22 @@
+{{ $input := (ds "topology_vars") -}}
+{{ range $input.cluster_nodes -}}
+apiVersion: "cilium.io/v2alpha1"
+kind: CiliumBGPPeeringPolicy
+metadata:
+  name: {{ (ds "cluster_name") }}-{{ .name}}
+spec:
+  nodeSelector:
+    matchLabels:
+      "kubernetes.io/hostname": {{ (ds "cluster_name") }}-{{ .name}}
+  virtualRouters:
+  - localASN: {{ .bgp_asn}}
+    serviceSelector:
+      matchExpressions:
+      - key: someKeyThatDoesNotExist
+        operator: DoesNotExist
+    exportPodCIDR: true
+    neighbors:
+    - peerAddress: {{ .peer_ip}} # IP address of tor
+      peerASN: {{ .peer_asn}}
+---
+{{ end -}}

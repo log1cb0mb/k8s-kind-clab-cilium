@@ -1,0 +1,8 @@
+# hidden files except .gitignore
+.*
+!/.gitignore
+
+#clab autoamated generated topo data
+ansible-inventory.yml
+topology-data.json
+topology.yaml

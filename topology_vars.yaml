@@ -1,0 +1,22 @@
+# Kind cluster nodes' name suffix
+cluster_nodes:
+  controller1:
+    name: control-plane
+    bgp_asn: 65020
+    peer_asn: 65010 #tor0
+    peer_ip: 10.0.0.1/32 #tor0
+  worker:
+    name: worker
+    bgp_asn: 65021
+    peer_asn: 65010 #tor0
+    peer_ip: 10.0.0.1/32 #tor0
+  worker2:
+    name: worker2
+    bgp_asn: 65022
+    peer_asn: 65011 #tor1
+    peer_ip: 10.0.0.2/32 #tor1
+  worker3:
+    name: worker3
+    bgp_asn: 65023
+    peer_asn: 65011 #tor1
+    peer_ip: 10.0.0.2/32 #tor1

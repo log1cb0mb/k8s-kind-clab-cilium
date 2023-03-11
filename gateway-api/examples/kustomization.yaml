@@ -1,0 +1,4 @@
+resources:
+- gatewayclass.yaml
+- bookinfo.yaml
+- basic-http.yaml

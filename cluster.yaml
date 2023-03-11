@@ -1,0 +1,86 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+networking:
+  disableDefaultCNI: true
+  podSubnet: "10.51.0.0/17"
+  kubeProxyMode: none
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.24.7
+    kubeadmConfigPatches:
+      - |
+        kind: InitConfiguration
+        nodeRegistration:
+          kubeletExtraArgs:
+            node-ip: 10.0.1.2
+            node-labels: "rack=rack0,node.kubernetes.io/controller=true"
+          criSocket: unix:///var/run/containerd/containerd.sock
+          imagePullPolicy: IfNotPresent
+          taints:
+          - effect: NoSchedule
+            key: node-role.kubernetes.io/controller
+        skipPhases:
+          - etcd/local
+      - |
+        kind: ClusterConfiguration
+        apiServer:
+          extraArgs:
+            advertise-address: 10.0.1.2
+            enable-bootstrap-token-auth: "true"
+            profiling: "false"
+            enable-admission-plugins: "AlwaysPullImages,ServiceAccount,NamespaceLifecycle,NodeRestriction"
+            tls-min-version: "VersionTLS12"
+            tls-cipher-suites: "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
+          timeoutForControlPlane: 4m0s
+        controllerManager:
+          extraArgs:
+            profiling: "false"
+            terminated-pod-gc-threshold: "50"
+        scheduler:
+          extraArgs:
+            profiling: "false"
+        certificatesDir: /etc/kubernetes/pki
+      - |
+        kind: KubeletConfiguration
+        authentication:
+          anonymous:
+            enabled: false
+        cgroupDriver: systemd
+        eventRecordQPS: 0
+        tlsCipherSuites:
+          - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+          - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+          - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
+  - role: worker
+    image: kindest/node:v1.24.7
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          criSocket: unix:///var/run/containerd/containerd.sock
+          imagePullPolicy: IfNotPresent
+          kubeletExtraArgs:
+            node-ip: 10.0.2.2
+            node-labels: "rack=rack0,node.kubernetes.io/worker=true"
+  - role: worker
+    image: kindest/node:v1.24.7
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          criSocket: unix:///var/run/containerd/containerd.sock
+          imagePullPolicy: IfNotPresent
+          kubeletExtraArgs:
+            node-ip: 10.0.3.2
+            node-labels: "rack=rack1,node.kubernetes.io/worker=true"
+  - role: worker
+    image: kindest/node:v1.24.7
+    kubeadmConfigPatches:
+      - |
+        kind: JoinConfiguration
+        nodeRegistration:
+          criSocket: unix:///var/run/containerd/containerd.sock
+          imagePullPolicy: IfNotPresent
+          kubeletExtraArgs:
+            node-ip: 10.0.4.2
+            node-labels: "rack=rack1,node.kubernetes.io/worker=true"
