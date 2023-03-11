@@ -8,7 +8,11 @@ Kubernetes cluster integration with Containerlab based network devices for testi
 - Kind
 - gomplate
 
-_NOTE: FRRouting based devices used by Containerlab topology uses custom image that is compiled with ECMP functionality enabled however the image is built only for `linux/arm64` architecture. If ECMP funtionality is not desired then official FRR image can be used that supports multiple platforms. It can be updated under `topology.gotmpl` file_
+## Notes
+
+FRRouting based devices used by Containerlab topology uses custom image that is compiled with ECMP functionality enabled however the image is built only for `linux/arm64` architecture. If ECMP funtionality is not desired then official FRR image can be used that supports multiple platforms. It can be updated under `topology.gotmpl` file.
+
+For MacOS (Apple Silicon), in order to run Containerlab as a container that does not provide ARM based image natively, `Use Rosetta for x86/amd64 emulation on Apple Silicon` experimental/beta feature must be enabled under docker desktop.
 
 ## Usage
 
