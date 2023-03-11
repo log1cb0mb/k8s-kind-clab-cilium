@@ -14,7 +14,8 @@ cilium-helm-install(){
         helm repo add cilium https://helm.cilium.io/
         cilium install \
           --version $ciliumVersion \
-          --helm-set debug.enabled=false \
+          --helm-set debug.enabled=true \
+          --helm-set debug.verbose=datapath \
           --helm-set ipam.mode=cluster-pool-v2beta \
           --helm-set ipam.operator.clusterPoolIPv4PodCIDRList\[0\]="10.51.0.0/17" \
           --helm-set tunnel=disabled \
