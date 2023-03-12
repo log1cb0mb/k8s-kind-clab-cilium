@@ -10,7 +10,7 @@ Kubernetes cluster integration with Containerlab based network devices for testi
 
 ## Notes
 
-FRRouting based devices used by Containerlab topology uses custom image that is compiled with ECMP functionality enabled however the image is built only for `linux/arm64` architecture. If ECMP funtionality is not desired then official FRR image can be used that supports multiple platforms. It can be updated under `topology.gotmpl` file.
+FRRouting based devices used by Containerlab topology uses custom image (Debian image) that is compiled with ECMP functionality enabled. If ECMP functionality is not desired then official FRR image (Alpine based) can be used. It can be updated under `topology.gotmpl` file.
 
 For MacOS (Apple Silicon), in order to run Containerlab as a container that does not provide ARM based image natively, `Use Rosetta for x86/amd64 emulation on Apple Silicon` experimental/beta feature must be enabled under docker desktop.
 
@@ -36,7 +36,7 @@ CILIUM_VERSION=v1.13.0
 and these can be customized by passing values to `make deploy` command e.g:
 
 ```bash
-make deploy CLUSTER_NAME=whatever KIND_NETWORK=172.100.0.0/16 CILIUM_VERSION=v1.13.0
+make deploy CLUSTER_NAME=whatever KIND_NETWORK=172.16.0.0/16 CILIUM_VERSION=v1.12.5
 ```
 
 ### Gateway API
