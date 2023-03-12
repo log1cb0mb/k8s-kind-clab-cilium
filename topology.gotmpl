@@ -6,8 +6,8 @@ topology:
   nodes:
     router0:
       kind: linux
-      # image: frrouting/frr:v8.4.1
-      image: log1cb0mb/frr-ecmp:v8.4.2
+      #image: frrouting/frr:v8.4.1
+      image: log1cb0mb/frr-debian:v8.4.2
       labels:
         app: frr
       exec:
@@ -17,6 +17,7 @@ topology:
       - ip route add blackhole 10.0.0.0/8
       - sysctl -w net.ipv4.fib_multipath_hash_policy=1
       - sysctl -w net.ipv6.fib_multipath_hash_policy=1
+      - sysctl -w net.ipv4.fib_multipath_use_neigh=1
       - touch /etc/frr/vtysh.conf
       - sed -i -e 's/bgpd=no/bgpd=yes/g' /etc/frr/daemons
       - usr/lib/frr/frrinit.sh start
@@ -38,8 +39,8 @@ topology:
 
     tor0:
       kind: linux
-      # image: frrouting/frr:v8.4.1
-      image: log1cb0mb/frr-ecmp:v8.4.2
+      #image: frrouting/frr:v8.4.1
+      image: log1cb0mb/frr-debian:v8.4.2
       labels:
         app: frr
       exec:
@@ -49,6 +50,7 @@ topology:
       - ip addr add 10.0.2.1/24 dev net2
       - sysctl -w net.ipv4.fib_multipath_hash_policy=1
       - sysctl -w net.ipv6.fib_multipath_hash_policy=1
+      - sysctl -w net.ipv4.fib_multipath_use_neigh=1
       - touch /etc/frr/vtysh.conf
       - sed -i -e 's/bgpd=no/bgpd=yes/g' /etc/frr/daemons
       - /usr/lib/frr/frrinit.sh start
@@ -73,8 +75,8 @@ topology:
 
     tor1:
       kind: linux
-      # image: frrouting/frr:v8.4.1
-      image: log1cb0mb/frr-ecmp:v8.4.2
+      #image: frrouting/frr:v8.4.1
+      image: log1cb0mb/frr-debian:v8.4.2
       labels:
         app: frr
       exec:
@@ -84,6 +86,7 @@ topology:
       - ip addr add 10.0.4.1/24 dev net2
       - sysctl -w net.ipv4.fib_multipath_hash_policy=1
       - sysctl -w net.ipv6.fib_multipath_hash_policy=1
+      - sysctl -w net.ipv4.fib_multipath_use_neigh=1
       - touch /etc/frr/vtysh.conf
       - sed -i -e 's/bgpd=no/bgpd=yes/g' /etc/frr/daemons
       - /usr/lib/frr/frrinit.sh start

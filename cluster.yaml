@@ -6,7 +6,7 @@ networking:
   kubeProxyMode: none
 nodes:
   - role: control-plane
-    image: kindest/node:v1.24.7
+    image: kindest/node:v1.25.3
     kubeadmConfigPatches:
       - |
         kind: InitConfiguration
@@ -52,7 +52,7 @@ nodes:
           - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
           - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305
   - role: worker
-    image: kindest/node:v1.24.7
+    image: kindest/node:v1.25.3
     kubeadmConfigPatches:
       - |
         kind: JoinConfiguration
@@ -63,7 +63,7 @@ nodes:
             node-ip: 10.0.2.2
             node-labels: "rack=rack0,node.kubernetes.io/worker=true"
   - role: worker
-    image: kindest/node:v1.24.7
+    image: kindest/node:v1.25.3
     kubeadmConfigPatches:
       - |
         kind: JoinConfiguration
@@ -74,7 +74,7 @@ nodes:
             node-ip: 10.0.3.2
             node-labels: "rack=rack1,node.kubernetes.io/worker=true"
   - role: worker
-    image: kindest/node:v1.24.7
+    image: kindest/node:v1.25.3
     kubeadmConfigPatches:
       - |
         kind: JoinConfiguration
